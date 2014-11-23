@@ -30,12 +30,14 @@ public:
 	struct SplitRes
 	{
 		BTree * right, *left;
-		BTree::Kljuc mid;
+		Kljuc mid;
 		SplitRes(BTree::Kljuc m, BTree * l, BTree * r) { mid = m; left = l; right = r; }
 		SplitRes() { right = left = nullptr; }
 	};
+	BTree::BTree(BTree&& cur);
 	BTree(int r);
-	~BTree() { brisi(); }
+	~BTree();
+	friend void brisi(BTree * cur);
 	BTree * findPtr(string str);  //proveri
 	int findInNode(string str);  //proveri
 	bool hasRoom();  //proveri
@@ -83,7 +85,7 @@ public:
 	}*/
 	int hasKey(string str);
 	BTree * insert(string str, string ops = "");
-	friend SplitRes split(BTree * cur, string str, string opis);
+	SplitRes split(Kljuc key, BTree * l = nullptr, BTree * r = nullptr);
 	friend ostream& operator<<(ostream& it, BTree::SplitRes split_res);
 	bool hasFather() const { return father == nullptr ? 0 : 1; }
 	void push(Kljuc key, BTree * left = nullptr, BTree * right = nullptr);
